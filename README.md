@@ -11,6 +11,8 @@ it helps DNS to redirect the domain to our local domain like picture shown
 server_flask_dashboard.py will create the the dashboard showing all the nxdomain that has been looked up before or being resolve by what ip.
 it will logs using bind logging, where all query will be logged in there
 
+![image](https://github.com/user-attachments/assets/4f5b9a7d-dcd6-49ae-a320-b1189a7a1504)
+
 script.sh will checking the domain whether it is nxdomain or not and also it is blocked or not. this script will actually looked up from quad9 threat inteligence to checked whether it is blocked or not, while using both quad9 and also google dns to check whether it is nxdomain or not picture below shows how it done
 
 ![image](https://github.com/user-attachments/assets/3cd4c8ad-3d56-4940-8b07-794fd585156a)
