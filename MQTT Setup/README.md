@@ -91,7 +91,7 @@ Or run it as a systemd service (optional).
 ## 🛠️ Database Schema
 
 ```sql
-CREATE DATABASE network_management;
+CREATE DATABASE dns_database;
 
 USE network_management;
 
