@@ -13,7 +13,7 @@ sudo chown $USER:$USER "$INSTALL_DIR"
 cd "$INSTALL_DIR"
 
 # Download the publisher script
-curl -O https://raw.githubusercontent.com/yourname/dns-client-setup/main/mqtt_publisher.py
+curl -O https://raw.githubusercontent.com/4arm/DNSBitranger/refs/heads/main/MQTT%20Setup/Client%20Setup/mqtt_publisher.py
 
 # Install required Python packages system-wide
 pip3 install --break-system-packages paho-mqtt requests
