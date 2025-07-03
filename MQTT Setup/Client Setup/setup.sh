@@ -4,6 +4,7 @@ echo "[*] Starting DNS Client Auto-Setup..."
 
 # Update system and install dependencies
 sudo apt update
+sudo apt install python3-paho-mqtt
 sudo apt install -y python3-pip curl
 
 # Create install directory
