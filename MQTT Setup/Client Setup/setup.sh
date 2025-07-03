@@ -27,3 +27,4 @@ cron_entry="*/5 * * * * /usr/bin/python3 $INSTALL_DIR/mqtt_publisher.py"
 (crontab -l 2>/dev/null | grep -Fv "$cron_entry"; echo "$cron_entry") | crontab -
 
 echo "[✓] DNS client setup complete. Publishes to MQTT every 5 minutes."
+echo "The directory will be /opt/dns-client."
