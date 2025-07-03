@@ -18,7 +18,7 @@ sudo mkdir -p /etc/bind
 cd /etc/bind
 
 # Pull mqtt_publisher.py from GitHub
-curl -O https://raw.githubusercontent.com/yourname/dns-client-setup/main/mqtt_publisher.py
+curl -O https://raw.githubusercontent.com/4arm/DNSBitranger/refs/heads/main/MQTT%20Setup/Client%20Setup/mqtt_publisher.py
 
 # Make sure it's executable
 chmod +x mqtt_publisher.py
