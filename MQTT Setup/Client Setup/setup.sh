@@ -4,26 +4,25 @@ echo "[*] Starting DNS Client Auto-Setup..."
 
 # Update system and install dependencies
 sudo apt update
-sudo apt install -y python3-pip python3-venv mosquitto-clients curl
+sudo apt install -y python3-pip curl
 
-# Create a virtual environment
-python3 -m venv /etc/bind/mqttenv
-source /etc/bind/mqttenv/bin/activate
+# Create install directory
+INSTALL_DIR="/opt/dns-client"
+sudo mkdir -p "$INSTALL_DIR"
+sudo chown $USER:$USER "$INSTALL_DIR"
+cd "$INSTALL_DIR"
 
-# Install required Python packages
-pip install paho-mqtt requests
+# Download the publisher script
+curl -O https://raw.githubusercontent.com/yourname/dns-client-setup/main/mqtt_publisher.py
 
-# Create /etc/bind if not exists
-sudo mkdir -p /etc/bind
-cd /etc/bind
+# Install required Python packages system-wide
+pip3 install --break-system-packages paho-mqtt requests
 
-# Pull mqtt_publisher.py from GitHub
-curl -O https://raw.githubusercontent.com/4arm/DNSBitranger/refs/heads/main/MQTT%20Setup/Client%20Setup/mqtt_publisher.py
-
-# Make sure it's executable
+# Make sure the script is executable
 chmod +x mqtt_publisher.py
 
-# Setup crontab to run every 5 mins
-(crontab -l 2>/dev/null; echo "*/5 * * * * /etc/bind/mqttenv/bin/python /etc/bind/mqtt_publisher.py") | crontab -
+# Set up cron job (if not already there)
+cron_entry="*/5 * * * * /usr/bin/python3 $INSTALL_DIR/mqtt_publisher.py"
+(crontab -l 2>/dev/null | grep -Fv "$cron_entry"; echo "$cron_entry") | crontab -
 
-echo "[✓] Setup complete. Device will publish every 5 minutes."
+echo "[✓] DNS client setup complete. Publishes to MQTT every 5 minutes."
