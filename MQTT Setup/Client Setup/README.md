@@ -20,7 +20,7 @@ This script sets up a DNS client that publishes system data to an MQTT broker ev
 1. Download the setup script:
 
 ```bash
-curl -O https://example.com/setup.sh  # Replace with actual URL if hosted
+curl -O https://raw.githubusercontent.com/4arm/DNSBitranger/refs/heads/main/MQTT%20Setup/Client%20Setup/setup.sh  # Replace with actual URL if hosted
 ```
 
 2. Make the script executable:
