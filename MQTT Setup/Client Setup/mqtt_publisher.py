@@ -17,10 +17,10 @@ DEVICE_INFO = {
 client = mqtt.Client(client_id="dns-" + DEVICE_INFO["serial_number"])
 
 # OPTIONAL: Use username/password if broker requires it
-client.username_pw_set("mqttuser", "yourpass")
+client.username_pw_set("mqttuser", "Muhd2003@")
 
 try:
-    client.connect("dns-public-ip", 1883, 60)
+    client.connect("203.80.23.229", 1883, 60)
     client.publish("dns/registration", json.dumps(DEVICE_INFO), qos=1)
     print("[+] Sent device info:", DEVICE_INFO)
     client.disconnect()
