@@ -23,7 +23,7 @@ pip3 install --break-system-packages paho-mqtt requests
 chmod +x mqtt_publisher.py
 
 # Set up cron job (if not already there)
-cron_entry="*/5 * * * * /usr/bin/python3 $INSTALL_DIR/mqtt_publisher.py"
+cron_entry="*/0 * * * * /usr/bin/python3 $INSTALL_DIR/mqtt_publisher.py"
 (crontab -l 2>/dev/null | grep -Fv "$cron_entry"; echo "$cron_entry") | crontab -
 
 echo "[✓] DNS client setup complete. Publishes to MQTT every 5 minutes."
