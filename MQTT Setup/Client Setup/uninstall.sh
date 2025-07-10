@@ -2,7 +2,7 @@
 
 sudo systemctl stop dnsmasq
 sudo systemctl disable dnsmasq
-sudo apt remove --purge -y dnsmasq python3-paho-mqtt python3-pip curl
+sudo apt remove --purge -y dnsmasq python3-paho-mqtt python3-pip
 sudo apt autoremove -y
 sudo rm -rf /opt/dns-client
 
