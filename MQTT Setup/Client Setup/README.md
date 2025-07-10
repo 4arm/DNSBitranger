@@ -1,26 +1,38 @@
 # DNS Client Auto-Setup
 
-This script sets up a DNS client that publishes system data to an MQTT broker every 5 minutes using a Python script.
+This setup script installs and configures a DNS client that publishes system data to an MQTT broker every 5 minutes. It also installs and manages `dnsmasq` as a local DNS server, ensuring no port conflicts on DNS port 53.
+
+---
 
 ## Features
 
-- Installs necessary dependencies (Python packages, curl, etc.)
-- Downloads the `mqtt_publisher.py` script from the official GitHub repository
-- Sets up a cron job to run the script every 5 minutes
-- Creates an installation directory at `/opt/dns-client`
+- Installs required dependencies: `dnsmasq`, Python packages (`paho-mqtt`, `requests`), `curl`, `ufw`
+- Checks and stops any processes using port 53 (DNS) to avoid conflicts
+- Configures firewall to allow DNS traffic on port 53
+- Restarts and enables the `dnsmasq` service for local DNS functionality
+- Downloads MQTT publishing scripts:  
+  - `mqtt_publisher.py`  
+  - `nxdomain_sender.py`
+- Sets up cron jobs to run both scripts every 5 minutes
+- Creates installation directory at `/opt/dns-client`
+
+---
 
 ## Prerequisites
 
 - Ubuntu/Debian-based system
-- Internet connection
 - Python 3 installed
+- Internet connection
+- Sudo privileges for installation and service management
+
+---
 
 ## Installation
 
 1. Download the setup script:
 
 ```bash
-curl -O https://raw.githubusercontent.com/4arm/DNSBitranger/refs/heads/main/MQTT%20Setup/Client%20Setup/setup.sh  # Replace with actual URL if hosted
+curl -O https://raw.githubusercontent.com/4arm/DNSBitranger/refs/heads/main/MQTT%20Setup/Client%20Setup/setup.sh
 ```
 
 2. Make the script executable:
@@ -35,40 +47,58 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
+---
+
 ## What It Does
 
-- Updates your system package index.
-- Installs `python3-paho-mqtt`, `python3-pip`, and `curl`.
-- Creates `/opt/dns-client` directory and assigns appropriate permissions.
-- Downloads `mqtt_publisher.py` from the GitHub repository:
-  [4arm/DNSBitranger - mqtt_publisher.py](https://github.com/4arm/DNSBitranger/blob/main/MQTT%20Setup/Client%20Setup/mqtt_publisher.py)
-- Installs Python packages: `paho-mqtt` and `requests`.
-- Schedules the script to run every 5 minutes via `cron`.
+- Updates system package index
+- Installs `dnsmasq`, `curl`, `python3-pip`, and `ufw`
+- Detects and kills any processes running on port 53 to avoid DNS conflicts
+- Opens port 53 (DNS) in the firewall via `ufw`
+- Restarts and enables `dnsmasq` service
+- Creates `/opt/dns-client` directory and downloads MQTT scripts there
+- Installs Python packages `paho-mqtt` and `requests`
+- Adds cron jobs to run `mqtt_publisher.py` and `nxdomain_sender.py` every 5 minutes
 
-## Cron Job
+---
 
-A cron job is added to run the script every 5 minutes:
+## Cron Jobs
+
+The following cron jobs are created (no duplicates):
 
 ```bash
 */5 * * * * /usr/bin/python3 /opt/dns-client/mqtt_publisher.py
+*/5 * * * * /usr/bin/python3 /opt/dns-client/nxdomain_sender.py
 ```
 
-To view your current cron jobs:
+To view current cron jobs:
 
 ```bash
 crontab -l
 ```
 
+---
+
 ## Directory Structure
 
-- `/opt/dns-client/`
-  - `mqtt_publisher.py` — The MQTT publishing script
+```
+/opt/dns-client/
+  ├── mqtt_publisher.py
+  └── nxdomain_sender.py
+```
+
+---
 
 ## Notes
 
-- If the cron job already exists, it will not be duplicated.
-- The script assumes `crontab` is available and the user has sufficient permissions.
+- The setup script requires sudo privileges to install packages, manage services, and modify firewall rules.
+- If any process is detected running on port 53, it will be killed to ensure `dnsmasq` can bind to it.
+- The MQTT scripts will run periodically via cron to publish DNS client data.
+- You can modify or extend the scripts located in `/opt/dns-client/`.
+- Make sure the system has internet access during setup to download dependencies and scripts.
+
+---
 
 ## License
 
-MIT or as per the repository license at [4arm/DNSBitranger](https://github.com/4arm/DNSBitranger)
+MIT License or as per the original repository license at [4arm/DNSBitranger](https://github.com/4arm/DNSBitranger).
