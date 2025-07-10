@@ -7,7 +7,7 @@ This guide explains how to completely uninstall the DNS client setup, including 
 ## What This Does
 
 - Stops and disables the `dnsmasq` service
-- Removes installed packages: `dnsmasq`, `python3-paho-mqtt`, `python3-pip`, `curl`
+- Removes installed packages: `dnsmasq`, `python3-paho-mqtt`, `python3-pip`
 - Removes installed Python packages: `paho-mqtt` and `requests`
 - Deletes the installation directory `/opt/dns-client`
 - Removes cron jobs running MQTT scripts
