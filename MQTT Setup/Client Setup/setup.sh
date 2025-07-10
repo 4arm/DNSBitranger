@@ -22,6 +22,21 @@ fi
 # Allow DNS port through UFW firewall
 sudo ufw allow 53
 
+# Configure dnsmasq
+echo "[*] Configuring dnsmasq..."
+sudo bash -c 'cat > /etc/dnsmasq.conf' <<EOF
+server=203.80.23.229
+no-resolv
+log-queries
+log-queries=extra
+log-facility=/var/log/dnsmasq.log
+EOF
+
+# Create the log file and give permissions
+sudo touch /var/log/dnsmasq.log
+sudo chmod 664 /var/log/dnsmasq.log
+sudo chown dnsmasq:adm /var/log/dnsmasq.log
+
 # Restart and enable dnsmasq service
 sudo systemctl restart dnsmasq
 sudo systemctl enable dnsmasq
@@ -46,7 +61,6 @@ chmod +x mqtt_publisher.py nxdomain_sender.py
 # Set up cron jobs (avoid duplicates)
 for script in mqtt_publisher.py nxdomain_sender.py; do
   cron_entry="*/5 * * * * /usr/bin/python3 $INSTALL_DIR/$script"
-  # Remove any existing line running the script and add the new one
   (crontab -l 2>/dev/null | grep -Fv "$script"; echo "$cron_entry") | crontab -
 done
 
