@@ -7,7 +7,7 @@ This guide explains how to completely uninstall the DNS client setup, including 
 ## What This Does
 
 - Stops and disables the `dnsmasq` service
-- Removes installed packages: `dnsmasq`, `python3-paho-mqtt`, `python3-pip`, `curl`, `ufw`
+- Removes installed packages: `dnsmasq`, `python3-paho-mqtt`, `python3-pip`, `curl`
 - Removes installed Python packages: `paho-mqtt` and `requests`
 - Deletes the installation directory `/opt/dns-client`
 - Removes cron jobs running MQTT scripts
@@ -26,7 +26,7 @@ sudo systemctl disable dnsmasq
 ### 2. Remove installed packages and dependencies
 
 ```bash
-sudo apt remove --purge -y dnsmasq python3-paho-mqtt python3-pip curl ufw
+sudo apt remove --purge -y dnsmasq python3-paho-mqtt python3-pip curl
 sudo apt autoremove -y
 ```
 
@@ -75,7 +75,7 @@ You can create a script with the following content to automate the uninstallatio
 
 sudo systemctl stop dnsmasq
 sudo systemctl disable dnsmasq
-sudo apt remove --purge -y dnsmasq python3-paho-mqtt python3-pip curl ufw
+sudo apt remove --purge -y dnsmasq python3-paho-mqtt python3-pip curl
 sudo apt autoremove -y
 sudo rm -rf /opt/dns-client
 
