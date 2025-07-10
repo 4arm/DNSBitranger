@@ -4,7 +4,7 @@ import requests
 
 def get_public_ip():
     try:
-        return requests.get("https://ifconfig.me", timeout=5).text.strip()
+        return requests.get("https://ipv4.icanhazip.com", timeout=5).text.strip()
     except Exception as e:
         print(f"[!] Failed to get public IP: {e}")
         return "0.0.0.0"
